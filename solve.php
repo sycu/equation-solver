@@ -4,7 +4,7 @@
 
 class EquationSolver
 {
-    public function solve(string $equation, bool $unique = true): Generator
+    public function solve(string $equation, bool $unique = false): Generator
     {
         preg_match_all('/[A-Za-z]/', $equation, $output);
 
@@ -18,7 +18,7 @@ class EquationSolver
                 if (eval(sprintf('return %s;', $solution = strtr($equation, $given)))) {
                     yield $solution;
                 }
-            } catch (ParseError $e) {
+            } catch (ParseError) {
             }
 
             return;
@@ -35,5 +35,5 @@ class EquationSolver
 
 $solver = new EquationSolver();
 foreach ($solver->solve($argv[1] ?? '', (bool) ($argv[2] ?? false)) as $result) {
-    echo("{$result}\n");
+    echo($result . PHP_EOL);
 }
