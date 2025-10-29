@@ -18,7 +18,7 @@ class EquationSolver
                 if (eval(sprintf('return %s;', $solution = strtr($equation, $given)))) {
                     yield $solution;
                 }
-            } catch (ParseError) {
+            } catch (ParseError | DivisionByZeroError) {
             }
 
             return;
